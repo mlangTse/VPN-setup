@@ -56,7 +56,7 @@ Add the following content:
     "server_port": 8388,
     "password": "your_password",
     "timeout": 300,
-    "method": "aes-256-gcm"
+    "method": "aes-256-cfb"
 }
 ```
 
@@ -83,6 +83,7 @@ Description=Shadowsocks Server
 After=network.target
 
 [Service]
+# use `which ssserver` to check the exact location of ssserver
 ExecStart=/home/ec2-user/shadowsocks_env/venv/bin/ssserver -c /etc/shadowsocks.json
 Restart=always
 User=root
@@ -110,7 +111,7 @@ sudo systemctl status shadowsocks
 
 ### Test Locally
 ```bash
-curl -x socks5h://127.0.0.1:8388 http://ipinfo.io
+curl -x socks5h://127.0.0.1:8388 http://youtube.com
 ```
 
 ---
@@ -145,7 +146,7 @@ sudo kill -9 <process_id>
 Update `/etc/resolv.conf`:
 ```bash
 nameserver 8.8.8.8
-nameserver 8.8.4.4
+nameserver 4.4.4.4
 ```
 
 ---
@@ -155,7 +156,7 @@ nameserver 8.8.4.4
 ### Example Client Configuration (e.g., Shadowrocket)
 - **Server**: Public IP or Domain Name of your EC2 instance
 - **Port**: 8388
-- **Encryption**: aes-256-gcm
+- **Encryption**: aes-256-cfb
 - **Password**: your_password
 
 ---
